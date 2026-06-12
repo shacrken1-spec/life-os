@@ -34,6 +34,7 @@ life-os/
 ## DATA
 - Google Drive folder: LifeOS/
 - One JSON per module
+- settings.json: user secrets (Gemini API key) — prompted via modal, never hardcoded in source
 - Drive API v3: files.get, files.update
 - Offline queue in memory → sync on reconnect
 - No localStorage

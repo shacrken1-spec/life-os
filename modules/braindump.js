@@ -1,7 +1,46 @@
 const Braindump = (() => {
-  // Google AI Studio key (free tier): https://aistudio.google.com/apikey
-  const GEMINI_KEY = 'YOUR_GEMINI_API_KEY';
   const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
+
+  // key lives in Drive (settings.json), never in source
+  async function getKey() {
+    const settings = await Store.load('settings');
+    const entry = settings.find(s => s.k === 'gemini_key');
+    return entry ? entry.v : null;
+  }
+
+  async function setKey(v) {
+    const settings = await Store.load('settings');
+    const entry = settings.find(s => s.k === 'gemini_key');
+    if (entry) entry.v = v; else settings.push({ k: 'gemini_key', v });
+    await Store.save('settings', settings);
+  }
+
+  function promptKey() {
+    return new Promise(resolve => {
+      const overlay = document.createElement('div');
+      overlay.className = 'modal-overlay';
+      overlay.innerHTML = `
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="gk-title">
+          <h2 id="gk-title" style="margin-top:0">Gemini API key</h2>
+          <p class="muted" style="margin-bottom:10px">Paste your key from
+            <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Google AI Studio</a>.
+            It is stored in your private Drive folder (settings.json), not in the app code.</p>
+          <input id="gk-input" type="password" placeholder="AIza…" autocomplete="off">
+          <div class="row-actions" style="margin-bottom:0;justify-content:flex-end">
+            <button id="gk-cancel" class="btn">Cancel</button>
+            <button id="gk-save" class="btn btn-accent">Save key</button>
+          </div>
+        </div>`;
+      document.body.appendChild(overlay);
+      const input = $('#gk-input', overlay);
+      input.focus();
+      const close = val => { overlay.remove(); resolve(val); };
+      $('#gk-cancel', overlay).addEventListener('click', () => close(null));
+      $('#gk-save', overlay).addEventListener('click', () => close(input.value.trim() || null));
+      input.addEventListener('keydown', e => { if (e.key === 'Enter') close(input.value.trim() || null); });
+      overlay.addEventListener('click', e => { if (e.target === overlay) close(null); });
+    });
+  }
 
   async function render(el) {
     const entries = await Store.load('braindump');
@@ -68,9 +107,14 @@ const Braindump = (() => {
   }
 
   async function summarize(text) {
-    if (GEMINI_KEY === 'YOUR_GEMINI_API_KEY') { toast('Set your Gemini API key in modules/braindump.js'); return null; }
+    let key = await getKey();
+    if (!key) {
+      key = await promptKey();
+      if (!key) return null;
+      await setKey(key);
+    }
     try {
-      const res = await fetch(`${GEMINI_URL}?key=${GEMINI_KEY}`, {
+      const res = await fetch(`${GEMINI_URL}?key=${key}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

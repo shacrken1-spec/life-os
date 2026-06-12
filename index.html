@@ -118,6 +118,7 @@ function toast(msg) {
 document.getElementById('auth-btn').addEventListener('click', () => Auth.toggle());
 document.getElementById('auth-btn-m').addEventListener('click', () => Auth.toggle());
 Auth.onChange(signedIn => {
+  if (signedIn) Store.load('settings');
   const label = signedIn ? 'Sign out' : 'Sign in';
   document.getElementById('auth-btn').textContent = label;
   document.getElementById('auth-btn-m').textContent = label;
