@@ -10,8 +10,6 @@
 ## STACK
 - PWA (HTML + CSS + Vanilla JS)
 - Google Drive API v3 — storage (JSON files per module)
-- Poalim Open Banking API (poalimdev.co.il) — bank data
-- Israeli credit card CSV import (Isracard / Cal / Max format)
 - No frameworks, no build tools, no npm
 
 ## PROJECT STRUCTURE
@@ -26,11 +24,9 @@ life-os/
     ├── trading.js
     ├── workout.js
     ├── habits.js
-    ├── sleep.js
     ├── supplements.js
     ├── watchlist.js
-    ├── goals.js
-    └── expenses.js
+    └── goals.js
 
 ## DATA
 - Google Drive folder: LifeOS/
@@ -38,10 +34,6 @@ life-os/
 - Drive API v3: files.get, files.update
 - Offline queue in memory → sync on reconnect
 - No localStorage
-
-## EXPENSES
-- Poalim Open Banking API: OAuth2 → GET /accounts → GET /accounts/{id}/transactions
-- CSV fallback: Isracard/Cal/Max, auto-detect by header, auto-categorize
 
 ## UI
 - Dark/light toggle, default dark
@@ -52,25 +44,22 @@ life-os/
 - 200ms page transitions only
 
 ## MODULES
-Dashboard: today cards — P&L, workout ✓/✗, habits %, sleep hrs, expenses today. Numbers only, no charts.
+Dashboard: today cards — P&L, workout ✓/✗, habits %. Numbers only, no charts.
 Trading: date/ticker/L/S/entry/exit/size/P&L/setup/notes — table + monthly P&L chart + win-rate by setup
 Workout: date/exercise/sets/reps/weight/notes — today session + PR tracker + weekly volume
 Habits: name/streak/last_done — checklist + heatmap calendar
-Sleep: date/hrs/mood(1-5)/energy(1-5) — input + 30d trend
 Supplements: name/dose/time/days — daily checklist
 Watchlist: ticker/notes/alert_price — list + Yahoo Finance live price
 Goals: title/target/current/unit/deadline — progress bars
-Expenses: date/amount/merchant/category/source — daily total + monthly donut + table
 
 ## BUILD ORDER — do all steps automatically:
 1. index.html + router + bottom nav
 2. style.css + dark mode tokens
 3. Google Drive auth + CRUD helpers
 4. Dashboard
-5. All 8 modules
-6. Poalim API + CSV import
-7. PWA manifest + service worker
-8. QA pass
+5. All 6 modules
+6. PWA manifest + service worker
+7. QA pass
 
 ## CONSTRAINTS
 - No localStorage

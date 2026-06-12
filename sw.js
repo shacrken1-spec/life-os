@@ -1,4 +1,4 @@
-const CACHE = 'lifeos-v1';
+const CACHE = 'lifeos-v2';
 const SHELL = [
   './',
   './index.html',
@@ -9,11 +9,9 @@ const SHELL = [
   './modules/trading.js',
   './modules/workout.js',
   './modules/habits.js',
-  './modules/sleep.js',
   './modules/supplements.js',
   './modules/watchlist.js',
-  './modules/goals.js',
-  './modules/expenses.js'
+  './modules/goals.js'
 ];
 
 self.addEventListener('install', e => {

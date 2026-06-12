@@ -1,7 +1,7 @@
 {
   "name": "Life OS",
   "short_name": "LifeOS",
-  "description": "Personal life dashboard: trading, workouts, habits, sleep, supplements, watchlist, goals, expenses",
+  "description": "Personal life dashboard: trading, workouts, habits, supplements, watchlist, goals",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
