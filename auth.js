@@ -1,6 +1,6 @@
 // Google Drive auth + per-module JSON storage with in-memory offline queue.
 const Auth = (() => {
-  const CLIENT_ID = 'YOUR_GOOGLE_OAUTH_CLIENT_ID.apps.googleusercontent.com';
+  const CLIENT_ID = '823247782356-5nvuvgcfs2m6ltpm32vt941h7i2m25oj.apps.googleusercontent.com';
   const SCOPE = 'https://www.googleapis.com/auth/drive.file';
   let token = null;
   let tokenClient = null;
